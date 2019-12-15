@@ -140,4 +140,9 @@ public class Helper {
         driverWait = new WebDriverWait(browser, TIMEOUT_VALUE);
         return driverWait.until(ExpectedConditions.visibilityOf(findElement(locator)));
     }
+
+    public WebElement findElementByUntilWait(String locator, String position) {
+        driverWait = new WebDriverWait(browser, TIMEOUT_VALUE);
+        return driverWait.until(ExpectedConditions.visibilityOf(findElement(locator, position)));
+    }
 }

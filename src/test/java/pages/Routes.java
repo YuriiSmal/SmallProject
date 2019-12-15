@@ -16,21 +16,26 @@ public class Routes extends HomePage {
     }
 
     public void checkElementInListByNumber(String number) {
-        Assert.assertTrue(findElementByImplicitWait(listRoutes, number, 5).isDisplayed(), "Fail!");
-        System.out.println("Displaying!");
+        Assert.assertTrue(findElementByImplicitWait(listRoutes, number, 5)
+                .isDisplayed(), "Fail! Create At least one route for test!");
+        System.out.println("Route is Displaying!");
     }
 
     public void chooseRoutInList(String number) {
         findElementByImplicitWait(listRoutes, number, 5).click();
     }
 
-    public void checkSearchByRouteName(String number) {
+    public void checkSearchByRouteName(String number) throws InterruptedException {
         waitCircleLoad(circleLoarder, "visible", 30);
         checkElementInListByNumber(number);
         String toSearch = findElement(listRoutes, number).getText();
         findElement(search).sendKeys(toSearch);
         waitCircleLoad(circleLoarder, "visible", 30);
         checkElementInListByNumber("1");
+        Thread.sleep(3000);
+        Assert.assertEquals(findElement(listRoutes, "1").getText(),
+                toSearch, "Fail!");
+        System.out.println("Search by Name are working! : " + toSearch + " is Ok!");
         makeScreen("searchByName");
         findElement(search).clear();
         waitCircleLoad(circleLoarder, "visible", 30);
@@ -39,6 +44,7 @@ public class Routes extends HomePage {
     public void checkSearchByStops(String number) throws InterruptedException {
         Thread.sleep(2000);
         chooseRoutInList(number);
+        System.out.println("Route :" + number + " selected");
         String stop = findElementByUntilWait(stops).getText();
         String title = findElementByUntilWait(name).getText().toUpperCase()
                 .replace(" " + login.toUpperCase(), "");
@@ -49,9 +55,9 @@ public class Routes extends HomePage {
         Thread.sleep(3000);
         Assert.assertEquals(findElement(listRoutes, "1").getText().toUpperCase(),
                 title, "Fail!");
-        System.out.println("All Right!");
+        System.out.println("Search by Stop are working! : " + stop + " is Ok!");
         makeScreen("searchByStops");
         findElement(search).clear();
+        waitCircleLoad(circleLoarder, "visible", 30);
     }
-
 }
